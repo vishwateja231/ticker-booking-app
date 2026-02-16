@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from typing import List
 
 from app.schemas.user import UserCreate, UserResponse
@@ -35,8 +36,11 @@ async def read_users(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(deps.get_current_admin_user)
 ):
-    result = await db.execute(select(User).offset(skip).limit(limit))
-    return result.scalars().all()
+    try:
+        result = await db.execute(select(User).offset(skip).limit(limit))
+        return result.scalars().all()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.delete("/{user_id}", status_code=204)
 async def delete_user(
