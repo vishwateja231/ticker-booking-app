@@ -36,19 +36,33 @@ A professional, full-stack Ticket Booking Application built with **FastAPI**, **
 
 ### **Option 1: Docker (Recommended)**
 
-1.  **Clone & Configure**:
+1.  **Configure Environment**:
     ```bash
     cp backend/.env.example backend/.env
-    # Edit backend/.env with your credentials (DB, Redis, Mailtrap)
+    # Edit backend/.env:
+    # Set REDIS_URL to your Upstash URL (rediss://...)
+    # Set MAILTRAP credentials
     ```
 
 2.  **Run with Docker Compose**:
     ```bash
     docker-compose up --build
     ```
+    *   **Note**: Local Redis service is included but optional if you use Cloud Redis.
     *   Frontend: `http://localhost:3000`
     *   Backend: `http://localhost:8000`
     *   Swagger Docs: `http://localhost:8000/docs`
+
+### **Option 2: Cloud Redis (Upstash)**
+To use Upstash Redis:
+1.  Get your `REDIS_URL` from Upstash Console (ensure it starts with `rediss://` for TLS).
+2.  Update `backend/.env`:
+    ```properties
+    REDIS_URL=rediss://default:token@host:port
+    CELERY_BROKER_URL=rediss://default:token@host:port
+    CELERY_RESULT_BACKEND=rediss://default:token@host:port
+    ```
+3.  Restart backend/worker.
 
 ### **Option 2: Local Development**
 

@@ -19,8 +19,6 @@ services:
       - "8000:8000"
     env_file:
       - ./backend/.env
-    depends_on:
-      - redis
 
   celery_worker:
     build: 
@@ -31,7 +29,6 @@ services:
     env_file:
       - ./backend/.env
     depends_on:
-      - redis
       - backend
 
   frontend:

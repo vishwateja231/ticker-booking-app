@@ -38,6 +38,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.on_event("startup")
+async def startup_event():
+    from app.core.redis import get_redis_client
+    try:
+        redis = get_redis_client()
+        await redis.ping()
+        print("✅ Connected to Redis successfully!")
+    except Exception as e:
+        print(f"❌ Failed to connect to Redis: {e}")
+
 @app.get("/")
 def root():
     return {"message": "Welcome to Ticket Booking API"}
