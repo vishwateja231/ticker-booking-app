@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+.env
+backend/.env
+
+# Node
+node_modules/
+dist/
+build/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# General
+.vscode/
+.idea/
+*.log
+.DS_Store
+coverage/
+htmlcov/
+*.sqlite3
+
+# Docker
+.docker/
